@@ -52,3 +52,17 @@ def test_handle_raises_on_failure() -> None:
         command.handle(commands=commands)
 
     assert excinfo.value.code == 1
+
+
+def test_build_prefixes_with_names_and_no_color() -> None:
+    command = ConcurrentCommand(typer.Typer())
+    prefixes = command.build_prefixes(
+        ["alpha", "beta"],
+        names=["nuxt", "db"],
+        prefix_format="<{name}:{index}>",
+        no_color=True,
+    )
+
+    assert prefixes[0].startswith("<nuxt:0>")
+    assert prefixes[1].startswith("<db:1>")
+    assert "\x1b" not in prefixes[0]
