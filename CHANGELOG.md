@@ -1,22 +1,24 @@
 # Changelog
 
+## v0.1.4 (2026-03-07)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.3...v0.1.4)
+
+### 🤖 CI
+
+- **publish.yml**: add workflow to publish package on release ([5edde7b](https://github.com/thememium/userun/commit/5edde7b5d926db6702d76df292690ebbf8e04719))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.3 (2026-03-07)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.2...v0.1.3)
 
-### 📖 Documentation
+### 🤖 CI
 
-- **readme**: rename useRun description to clarify CLI name ([65a9762](https://github.com/thememium/userun/commit/65a9762ad5da50f2e7533e5b636421a20f413567))
-- **pyproject**: replace placeholder description with meaningful project summary ([c9f0450](https://github.com/thememium/userun/commit/c9f04503690b91dac37b5677ef6b521afe8639a3))
-- **readme**: rename project to useRun and clarify failure handling ([f8c8d19](https://github.com/thememium/userun/commit/f8c8d19ad2645d0c08fa78b24d692e880292d529))
-- **issue-template**: add bug report issue template ([7ef9fdd](https://github.com/thememium/userun/commit/7ef9fdd83ece6aeda4b02215a7779d8b9f231539))
-- add comprehensive CONTRIBUTING guide ([44816f7](https://github.com/thememium/userun/commit/44816f70073c2c86bca58d9c3c58004806ff039c))
-- **security**: add SECURITY.md with vulnerability reporting guidelines ([6e58c8d](https://github.com/thememium/userun/commit/6e58c8d4750b002424b1a4be9debded33582f601))
-- add MIT LICENSE file ([0e843f7](https://github.com/thememium/userun/commit/0e843f7ff5451ac2fa515ec90a6229ca8d87d864))
-
-### 🏡 Chore
-
-- **pyproject**: lower Python requirement, add classifiers, license, URLs and Ty config ([eaac795](https://github.com/thememium/userun/commit/eaac79532993ab0d2d4d5c5e4ebc253d2093217b))
+- **publish.yml**: add workflow to publish package on release ([5edde7b](https://github.com/thememium/userun/commit/5edde7b5d926db6702d76df292690ebbf8e04719))
 
 ### Contributors
 
