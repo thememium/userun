@@ -3,11 +3,12 @@
 from __future__ import annotations
 
 import asyncio
-import sys
+import os
+import re
 from dataclasses import dataclass
 from typing import TextIO
 
-from usecli import Argument, BaseCommand, Option, theme
+from usecli import Argument, BaseCommand, Option, console, theme
 
 
 class ConcurrentCommand(BaseCommand):
@@ -71,6 +72,10 @@ class ConcurrentCommand(BaseCommand):
             output.write(f"{prefix}{text}")
             output.flush()
 
+    @staticmethod
+    def strip_ansi(text: str) -> str:
+        return re.sub(r"\x1b\[[0-9;]*m", "", text)
+
     def build_prefixes(
         self,
         commands: list[str],
@@ -132,11 +137,24 @@ class ConcurrentCommand(BaseCommand):
         failure_event: asyncio.Event | None = None,
         process_registry: dict[int, asyncio.subprocess.Process] | None = None,
         registry_lock: asyncio.Lock | None = None,
+        subprocess_color: bool = True,
     ) -> int:
+        env = None
+        if subprocess_color:
+            env = os.environ.copy()
+            env.update(
+                {
+                    "FORCE_COLOR": "1",
+                    "CLICOLOR_FORCE": "1",
+                    "RICH_FORCE_TERMINAL": "1",
+                    "TERM": env.get("TERM", "xterm-256color"),
+                }
+            )
         process = await asyncio.create_subprocess_shell(
             spec.command,
             stdout=asyncio.subprocess.PIPE,
             stderr=asyncio.subprocess.PIPE,
+            env=env,
         )
         if process_registry is not None and registry_lock is not None:
             async with registry_lock:
@@ -151,6 +169,8 @@ class ConcurrentCommand(BaseCommand):
                 text = line.decode(errors="replace")
                 if not text.endswith("\n"):
                     text = f"{text}\n"
+                if not subprocess_color:
+                    text = self.strip_ansi(text)
                 await queue.put(f"{spec.prefix}{text}")
 
         tasks: list[asyncio.Task[None]] = []
@@ -182,6 +202,7 @@ class ConcurrentCommand(BaseCommand):
         no_prefix: bool = False,
         no_color: bool = False,
         kill_others: bool = False,
+        subprocess_color: bool = True,
     ) -> list[int]:
         prefixes = self.build_prefixes(
             commands,
@@ -205,8 +226,7 @@ class ConcurrentCommand(BaseCommand):
                 item = await queue.get()
                 if item is None:
                     break
-                sys.stdout.write(item)
-                sys.stdout.flush()
+                console.print(item, end="", markup=False, highlight=False)
 
         writer_task = asyncio.create_task(writer())
         results_task = asyncio.gather(
@@ -217,6 +237,7 @@ class ConcurrentCommand(BaseCommand):
                     failure_event=failure_event,
                     process_registry=process_registry,
                     registry_lock=registry_lock,
+                    subprocess_color=subprocess_color,
                 )
                 for spec in specs
             )
@@ -273,6 +294,11 @@ class ConcurrentCommand(BaseCommand):
             "--no-color",
             help="Disable ANSI colors in prefixes.",
         ),
+        subprocess_color: bool = Option(
+            True,
+            "--subprocess-color/--no-subprocess-color",
+            help="Enable or disable ANSI colors from subprocess output.",
+        ),
     ) -> None:
         name_list = self.parse_csv(names)
         color_names = self.parse_csv(colors)
@@ -290,6 +316,7 @@ class ConcurrentCommand(BaseCommand):
                 no_prefix=no_prefix,
                 no_color=no_color,
                 kill_others=kill_others,
+                subprocess_color=subprocess_color,
             )
         )
         if any(code != 0 for code in exit_codes):
