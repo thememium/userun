@@ -5,6 +5,8 @@ from __future__ import annotations
 import asyncio
 import os
 import re
+import shlex
+import shutil
 from dataclasses import dataclass
 from typing import TextIO
 
@@ -138,6 +140,7 @@ class ConcurrentCommand(BaseCommand):
         process_registry: dict[int, asyncio.subprocess.Process] | None = None,
         registry_lock: asyncio.Lock | None = None,
         subprocess_color: bool = True,
+        shell: list[str] | None = None,
     ) -> int:
         env = None
         if subprocess_color:
@@ -150,12 +153,20 @@ class ConcurrentCommand(BaseCommand):
                     "TERM": env.get("TERM", "xterm-256color"),
                 }
             )
-        process = await asyncio.create_subprocess_shell(
-            spec.command,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-            env=env,
-        )
+        argv = list(shell or ["/bin/sh", "-c"])
+        argv.append(spec.command)
+        try:
+            process = await asyncio.create_subprocess_exec(
+                *argv,
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                env=env,
+            )
+        except (FileNotFoundError, PermissionError, OSError) as exc:
+            await queue.put(f"{spec.prefix}failed to start: {spec.command}: {exc}\n")
+            if failure_event is not None:
+                failure_event.set()
+            return 127
         if process_registry is not None and registry_lock is not None:
             async with registry_lock:
                 process_registry[spec.index] = process
@@ -203,6 +214,7 @@ class ConcurrentCommand(BaseCommand):
         no_color: bool = False,
         kill_others: bool = False,
         subprocess_color: bool = True,
+        shell: list[str] | None = None,
     ) -> list[int]:
         prefixes = self.build_prefixes(
             commands,
@@ -238,6 +250,7 @@ class ConcurrentCommand(BaseCommand):
                     process_registry=process_registry,
                     registry_lock=registry_lock,
                     subprocess_color=subprocess_color,
+                    shell=shell,
                 )
                 for spec in specs
             )
@@ -299,7 +312,53 @@ class ConcurrentCommand(BaseCommand):
             "--subprocess-color/--no-subprocess-color",
             help="Enable or disable ANSI colors from subprocess output.",
         ),
+        shell: str | None = Option(
+            None,
+            "--shell",
+            "-s",
+            help=(
+                "Shell command to run as '<shell> <args> <command>' "
+                "(default: bash -lc if available, else /bin/sh -c)."
+            ),
+        ),
     ) -> None:
+        resolved_shell: list[str] | None = None
+        if isinstance(shell, str):
+            shell = shell.strip()
+            if not shell:
+                console.print(
+                    "Shell cannot be empty. Use --shell 'bash -lc', or omit to use defaults."
+                )
+                raise SystemExit(1)
+            shell_parts = shlex.split(shell)
+            if not shell_parts:
+                console.print(
+                    "Shell cannot be empty. Use --shell 'bash -lc', or omit to use defaults."
+                )
+                raise SystemExit(1)
+            shell_executable = shell_parts[0]
+            if os.path.isabs(shell_executable):
+                if not (
+                    os.path.isfile(shell_executable)
+                    and os.access(shell_executable, os.X_OK)
+                ):
+                    console.print(
+                        f"Shell not found or not executable: {shell_executable}"
+                    )
+                    raise SystemExit(1)
+                resolved_shell = [shell_executable, *shell_parts[1:]]
+            else:
+                resolved_executable = shutil.which(shell_executable)
+                if resolved_executable is None:
+                    console.print(f"Shell not found on PATH: {shell_executable}")
+                    raise SystemExit(1)
+                resolved_shell = [resolved_executable, *shell_parts[1:]]
+        if resolved_shell is None:
+            bash_path = shutil.which("bash")
+            if bash_path:
+                resolved_shell = [bash_path, "-lc"]
+            else:
+                resolved_shell = ["/bin/sh", "-c"]
         name_list = self.parse_csv(names)
         color_names = self.parse_csv(colors)
         resolved_colors: list[str] = []
@@ -317,6 +376,7 @@ class ConcurrentCommand(BaseCommand):
                 no_color=no_color,
                 kill_others=kill_others,
                 subprocess_color=subprocess_color,
+                shell=resolved_shell,
             )
         )
         if any(code != 0 for code in exit_codes):
