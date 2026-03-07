@@ -1,4 +1,5 @@
 import asyncio
+import pathlib
 import re
 import shlex
 import sys
@@ -103,3 +104,37 @@ def test_run_all_sets_subprocess_color_env_by_default(
     captured = capsys.readouterr()
     assert exit_codes == [0]
     assert "1" in captured.out
+
+
+def test_run_all_defaults_to_bash_when_available(
+    capsys: pytest.CaptureFixture[str],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: pathlib.Path,
+) -> None:
+    fake_bash = tmp_path / "bash"
+    fake_bash.write_text("#!/bin/sh\necho bash\n", encoding="utf-8")
+    fake_bash.chmod(0o755)
+    monkeypatch.setattr(
+        "userun.cli.commands.concurrent_command.shutil.which",
+        lambda name: str(fake_bash) if name == "bash" else None,
+    )
+    command = ConcurrentCommand(typer.Typer())
+    exit_codes = asyncio.run(command.run_all(["echo ${0#-}"], no_color=True))
+
+    captured = capsys.readouterr()
+    output = strip_ansi(captured.out)
+
+    assert exit_codes == [0]
+    assert re.search(r"\bbash\b", output)
+
+
+def test_parse_shell_accepts_shell_with_args(
+    tmp_path: pathlib.Path,
+) -> None:
+    fake_bash = tmp_path / "bash"
+    fake_bash.write_text("#!/bin/sh\necho bash\n", encoding="utf-8")
+    fake_bash.chmod(0o755)
+
+    resolved = ConcurrentCommand.parse_shell(f"{fake_bash} -lc")
+
+    assert resolved == [str(fake_bash), "-lc"]
