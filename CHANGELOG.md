@@ -1,12 +1,26 @@
 # Changelog
 
+## v0.1.5 (2026-03-07)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.4...v0.1.5)
+
+### ✅ Tests
+
+- **smoke_test**: add timeout, output coercion and environment checks ([ed0325e](https://github.com/thememium/userun/commit/ed0325e5dfc21cb73e89875f6d98cadb3f99ae09))
+- **tests**: add smoke_test to verify CLI and import ([17770b9](https://github.com/thememium/userun/commit/17770b91eb90cd885f39af5cf4a9118a35c6bbcf))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.4 (2026-03-07)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.3...v0.1.4)
 
-### 🤖 CI
+### ✅ Tests
 
-- **publish.yml**: add workflow to publish package on release ([5edde7b](https://github.com/thememium/userun/commit/5edde7b5d926db6702d76df292690ebbf8e04719))
+- **smoke_test**: add timeout, output coercion and environment checks ([ed0325e](https://github.com/thememium/userun/commit/ed0325e5dfc21cb73e89875f6d98cadb3f99ae09))
+- **tests**: add smoke_test to verify CLI and import ([17770b9](https://github.com/thememium/userun/commit/17770b91eb90cd885f39af5cf4a9118a35c6bbcf))
 
 ### Contributors
 

@@ -1,6 +1,6 @@
 [project]
 name = "userun"
-version = "0.1.4"
+version = "0.1.5"
 description = "Run multiple shell commands concurrently with readable, prefixed output."
 readme = "README.md"
 authors = [{ name = "Edward Boswell", email = "thememium@gmail.com" }]
