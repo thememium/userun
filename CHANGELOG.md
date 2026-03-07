@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.1.2 (2026-03-07)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.1...v0.1.2)
+
+### 🩹 Fixes
+
+- **poe**: update dev task to run correct entry point ([cc713c7](https://github.com/thememium/userun/commit/cc713c771caf2a8fe5ba6f8ba0f2609a6715b469))
+
+### 📖 Documentation
+
+- **readme**: replace text logo with image logo ([9248cc8](https://github.com/thememium/userun/commit/9248cc8f0a89525f2e5d171284aa1b3827b52f42))
+- add dark‑background logo image for documentation ([c124a00](https://github.com/thememium/userun/commit/c124a002ca743e65296d1d1a3dbe0f2b17a21b2d))
+- **readme**: add comprehensive project README ([03b5268](https://github.com/thememium/userun/commit/03b5268d98dabd9aeef5b93dce9e1ff0522f5ab9))
+
+### 🏡 Chore
+
+- **userun/cli**: delete obsolete command.py.j2 template ([2481ae6](https://github.com/thememium/userun/commit/2481ae6523b8c54190f041ecb510f517db256905))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.1 (2026-03-07)
 
 ### 🚀 Enhancements
