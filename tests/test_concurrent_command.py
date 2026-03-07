@@ -66,3 +66,40 @@ def test_build_prefixes_with_names_and_no_color() -> None:
     assert prefixes[0].startswith("<nuxt:0>")
     assert prefixes[1].startswith("<db:1>")
     assert "\x1b" not in prefixes[0]
+
+
+def test_run_all_disables_subprocess_colors(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    command = ConcurrentCommand(typer.Typer())
+    command_line = python_command("print('\\x1b[31mred\\x1b[0m')")
+
+    exit_codes = asyncio.run(
+        command.run_all(
+            [command_line],
+            no_color=True,
+            subprocess_color=False,
+        )
+    )
+
+    captured = capsys.readouterr()
+    assert exit_codes == [0]
+    assert "\x1b" not in captured.out
+
+
+def test_run_all_sets_subprocess_color_env_by_default(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    command = ConcurrentCommand(typer.Typer())
+    command_line = python_command("import os; print(os.getenv('FORCE_COLOR', ''))")
+
+    exit_codes = asyncio.run(
+        command.run_all(
+            [command_line],
+            no_color=True,
+        )
+    )
+
+    captured = capsys.readouterr()
+    assert exit_codes == [0]
+    assert "1" in captured.out
