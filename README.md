@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/thememium/userun">
-    <strong>userun</strong>
+    <img src="https://raw.githubusercontent.com/thememium/userun/refs/heads/master/docs/images/userun-logo-dark-bg.png" alt="useRun" width="407" height="162">
   </a>
 
   <p align="center">
