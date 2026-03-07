@@ -34,7 +34,7 @@
 
 ## About
 
-useRun is a Python command runner for concurrent runs. It runs multiple shell commands concurrently and keeps the output readable with prefixed lines (names and optional colors). It gives you:
+useRun (`userun`) is a Python CLI that runs multiple shell commands concurrently and keeps the output readable with prefixed lines (names and optional colors). It gives you:
 
 - **Parallel execution** - Run multiple commands at the same time
 - **Named prefixes** - Label output with names and optional colors
