@@ -10,5 +10,5 @@ themes_dir = "themes"
 theme = "default"
 hide_init = true
 hide_inspire = true
-hide_make_command = false
+hide_make_command = true
 hide_make_theme = true
