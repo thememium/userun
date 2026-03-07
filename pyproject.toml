@@ -1,7 +1,7 @@
 [project]
 name = "userun"
 version = "0.1.2"
-description = "Add your description here"
+description = "Run multiple shell commands concurrently with readable, prefixed output."
 readme = "README.md"
 authors = [{ name = "Edward Boswell", email = "thememium@gmail.com" }]
 requires-python = ">=3.10"
