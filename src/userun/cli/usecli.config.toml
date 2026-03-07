@@ -1,0 +1,14 @@
+[usecli]
+command_name = "userun"
+title = "userun"
+title_file = "title.txt"
+title_font = "ansi_shadow"
+description = "A python command runner for concurrent runs."
+commands_dir = "commands"
+templates_dir = "templates"
+themes_dir = "themes"
+theme = "default"
+hide_init = true
+hide_inspire = false
+hide_make_command = false
+hide_make_theme = true
