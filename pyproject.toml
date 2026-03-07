@@ -5,10 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 authors = [{ name = "Edward Boswell", email = "thememium@gmail.com" }]
 requires-python = ">=3.12"
-dependencies = [
-    "asyncio>=4.0.0",
-    "usecli>=0.1.48",
-]
+dependencies = ["asyncio>=4.0.0", "usecli>=0.1.48"]
 
 [project.scripts]
 userun = "usecli:main"
@@ -46,6 +43,7 @@ format = "uv run ruff format ."
 deptry = "uv deptry ."
 typecheck = "uv run ty check"
 release = "uv run usechange release"
+concurrent-demo = "uv run userun concurrent -n server,lint,test \"python3 -m http.server 8000\" \"uv run poe lint\" \"uv run poe test\""
 
 [tool.setuptools.packages.find]
 where = ["."]
