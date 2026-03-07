@@ -6,6 +6,7 @@ readme = "README.md"
 authors = [{ name = "Edward Boswell", email = "thememium@gmail.com" }]
 requires-python = ">=3.12"
 dependencies = [
+    "asyncio>=4.0.0",
     "usecli>=0.1.48",
 ]
 
@@ -29,6 +30,10 @@ dev = [
 
 [tool.deptry]
 known_first_party = ["userun"]
+
+[tool.deptry.per_rule_ignores]
+DEP002 = ["asyncio"]
+DEP005 = ["asyncio"]
 
 [tool.poe.tasks]
 dev = "uv run main.py"
