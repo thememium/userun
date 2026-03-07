@@ -153,7 +153,7 @@ class ConcurrentCommand(BaseCommand):
                     "TERM": env.get("TERM", "xterm-256color"),
                 }
             )
-        argv = list(shell or ["/bin/sh", "-c"])
+        argv = list(shell or self.default_shell())
         argv.append(spec.command)
         try:
             process = await asyncio.create_subprocess_exec(
@@ -216,6 +216,8 @@ class ConcurrentCommand(BaseCommand):
         subprocess_color: bool = True,
         shell: list[str] | None = None,
     ) -> list[int]:
+        if shell is None:
+            shell = self.default_shell()
         prefixes = self.build_prefixes(
             commands,
             names=names,
@@ -324,41 +326,9 @@ class ConcurrentCommand(BaseCommand):
     ) -> None:
         resolved_shell: list[str] | None = None
         if isinstance(shell, str):
-            shell = shell.strip()
-            if not shell:
-                console.print(
-                    "Shell cannot be empty. Use --shell 'bash -lc', or omit to use defaults."
-                )
-                raise SystemExit(1)
-            shell_parts = shlex.split(shell)
-            if not shell_parts:
-                console.print(
-                    "Shell cannot be empty. Use --shell 'bash -lc', or omit to use defaults."
-                )
-                raise SystemExit(1)
-            shell_executable = shell_parts[0]
-            if os.path.isabs(shell_executable):
-                if not (
-                    os.path.isfile(shell_executable)
-                    and os.access(shell_executable, os.X_OK)
-                ):
-                    console.print(
-                        f"Shell not found or not executable: {shell_executable}"
-                    )
-                    raise SystemExit(1)
-                resolved_shell = [shell_executable, *shell_parts[1:]]
-            else:
-                resolved_executable = shutil.which(shell_executable)
-                if resolved_executable is None:
-                    console.print(f"Shell not found on PATH: {shell_executable}")
-                    raise SystemExit(1)
-                resolved_shell = [resolved_executable, *shell_parts[1:]]
+            resolved_shell = self.parse_shell(shell)
         if resolved_shell is None:
-            bash_path = shutil.which("bash")
-            if bash_path:
-                resolved_shell = [bash_path, "-lc"]
-            else:
-                resolved_shell = ["/bin/sh", "-c"]
+            resolved_shell = self.default_shell()
         name_list = self.parse_csv(names)
         color_names = self.parse_csv(colors)
         resolved_colors: list[str] = []
@@ -381,3 +351,39 @@ class ConcurrentCommand(BaseCommand):
         )
         if any(code != 0 for code in exit_codes):
             raise SystemExit(1)
+
+    @staticmethod
+    def default_shell() -> list[str]:
+        bash_path = shutil.which("bash")
+        if bash_path:
+            return [bash_path, "-lc"]
+        return ["/bin/sh", "-c"]
+
+    @staticmethod
+    def parse_shell(shell: str) -> list[str] | None:
+        shell = shell.strip()
+        if not shell:
+            console.print(
+                "Shell cannot be empty. Use --shell 'bash -lc', or omit to use defaults."
+            )
+            raise SystemExit(1)
+        shell_parts = shlex.split(shell)
+        if not shell_parts:
+            console.print(
+                "Shell cannot be empty. Use --shell 'bash -lc', or omit to use defaults."
+            )
+            raise SystemExit(1)
+        shell_executable = shell_parts[0]
+        if os.path.isabs(shell_executable):
+            if not (
+                os.path.isfile(shell_executable)
+                and os.access(shell_executable, os.X_OK)
+            ):
+                console.print(f"Shell not found or not executable: {shell_executable}")
+                raise SystemExit(1)
+            return [shell_executable, *shell_parts[1:]]
+        resolved_executable = shutil.which(shell_executable)
+        if resolved_executable is None:
+            console.print(f"Shell not found on PATH: {shell_executable}")
+            raise SystemExit(1)
+        return [resolved_executable, *shell_parts[1:]]
