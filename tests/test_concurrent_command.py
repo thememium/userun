@@ -128,6 +128,20 @@ def test_run_all_defaults_to_bash_when_available(
     assert re.search(r"\bbash\b", output)
 
 
+def test_run_all_kill_others_completes_when_all_succeed() -> None:
+    command = ConcurrentCommand(typer.Typer())
+    commands = [
+        python_command("print('ok-1')"),
+        python_command("print('ok-2')"),
+    ]
+
+    exit_codes = asyncio.run(
+        asyncio.wait_for(command.run_all(commands, kill_others=True), timeout=2.0)
+    )
+
+    assert exit_codes == [0, 0]
+
+
 def test_parse_shell_accepts_shell_with_args(
     tmp_path: pathlib.Path,
 ) -> None:
