@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.1.6 (2026-04-13)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.5...v0.1.6)
+
+### 🩹 Fixes
+
+- concurrent exit teardown (#1) (#1) ([cd10a86](https://github.com/thememium/userun/commit/cd10a86d818519dae289a2cacf0721fdea330925))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.5 (2026-03-07)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.4...v0.1.5)
