@@ -7,6 +7,7 @@ import os
 import re
 import shlex
 import shutil
+import signal
 from dataclasses import dataclass
 from typing import TextIO
 
@@ -161,6 +162,7 @@ class ConcurrentCommand(BaseCommand):
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=env,
+                start_new_session=os.name != "nt",
             )
         except (FileNotFoundError, PermissionError, OSError) as exc:
             await queue.put(f"{spec.prefix}failed to start: {spec.command}: {exc}\n")
@@ -189,19 +191,28 @@ class ConcurrentCommand(BaseCommand):
             tasks.append(asyncio.create_task(read_and_queue(process.stdout)))
         if process.stderr is not None:
             tasks.append(asyncio.create_task(read_and_queue(process.stderr)))
-
-        return_code = await process.wait()
-        if tasks:
-            await asyncio.gather(*tasks)
-        await queue.put(
-            f"{spec.prefix}exited with code {return_code}: {spec.command}\n"
-        )
-        if process_registry is not None and registry_lock is not None:
-            async with registry_lock:
-                process_registry.pop(spec.index, None)
-        if failure_event is not None and return_code != 0:
-            failure_event.set()
-        return return_code
+        try:
+            return_code = await process.wait()
+            if tasks:
+                await asyncio.gather(*tasks)
+            await queue.put(
+                f"{spec.prefix}exited with code {return_code}: {spec.command}\n"
+            )
+            if failure_event is not None and return_code != 0:
+                failure_event.set()
+            return return_code
+        except asyncio.CancelledError:
+            await self.terminate_process(process)
+            raise
+        finally:
+            for task in tasks:
+                if not task.done():
+                    task.cancel()
+            if tasks:
+                await asyncio.gather(*tasks, return_exceptions=True)
+            if process_registry is not None and registry_lock is not None:
+                async with registry_lock:
+                    process_registry.pop(spec.index, None)
 
     async def run_all(
         self,
@@ -257,18 +268,32 @@ class ConcurrentCommand(BaseCommand):
                 for spec in specs
             )
         )
-
+        failure_wait_task: asyncio.Task[bool] | None = None
         if kill_others and failure_event is not None:
-            await failure_event.wait()
-            async with registry_lock:
-                for process in process_registry.values():
-                    if process.returncode is None:
-                        process.terminate()
-
-        results = await results_task
-        await queue.put(None)
-        await writer_task
-        return list(results)
+            failure_wait_task = asyncio.create_task(failure_event.wait())
+        try:
+            if failure_wait_task is not None:
+                done, pending = await asyncio.wait(
+                    {results_task, failure_wait_task},
+                    return_when=asyncio.FIRST_COMPLETED,
+                )
+                if failure_wait_task in done:
+                    await self.terminate_all(process_registry, registry_lock)
+                    results = await results_task
+                else:
+                    results = await results_task
+                if failure_wait_task in pending:
+                    failure_wait_task.cancel()
+                    await asyncio.gather(failure_wait_task, return_exceptions=True)
+            else:
+                results = await results_task
+            return list(results)
+        except asyncio.CancelledError:
+            await self.terminate_all(process_registry, registry_lock)
+            raise
+        finally:
+            await queue.put(None)
+            await writer_task
 
     def handle(
         self,
@@ -336,21 +361,84 @@ class ConcurrentCommand(BaseCommand):
             resolved = self.resolve_color(color_name)
             if resolved:
                 resolved_colors.append(resolved)
-        exit_codes = asyncio.run(
-            self.run_all(
-                commands,
-                names=name_list,
-                colors=resolved_colors,
-                prefix_format=prefix_format,
-                no_prefix=no_prefix,
-                no_color=no_color,
-                kill_others=kill_others,
-                subprocess_color=subprocess_color,
-                shell=resolved_shell,
+        try:
+            exit_codes = asyncio.run(
+                self.run_all(
+                    commands,
+                    names=name_list,
+                    colors=resolved_colors,
+                    prefix_format=prefix_format,
+                    no_prefix=no_prefix,
+                    no_color=no_color,
+                    kill_others=kill_others,
+                    subprocess_color=subprocess_color,
+                    shell=resolved_shell,
+                )
             )
-        )
+        except KeyboardInterrupt:
+            raise SystemExit(130) from None
         if any(code != 0 for code in exit_codes):
             raise SystemExit(1)
+
+    @staticmethod
+    async def terminate_process(
+        process: asyncio.subprocess.Process, *, timeout_seconds: float = 1.0
+    ) -> None:
+        if process.returncode is not None:
+            return
+        if os.name != "nt" and process.pid is not None:
+            try:
+                os.killpg(process.pid, signal.SIGINT)
+            except ProcessLookupError:
+                return
+            except OSError:
+                pass
+        else:
+            process.terminate()
+        try:
+            await asyncio.wait_for(process.wait(), timeout=0.5)
+            return
+        except asyncio.TimeoutError:
+            pass
+        if os.name != "nt" and process.pid is not None:
+            try:
+                os.killpg(process.pid, signal.SIGTERM)
+            except ProcessLookupError:
+                return
+            except OSError:
+                pass
+        else:
+            process.terminate()
+        try:
+            await asyncio.wait_for(process.wait(), timeout=timeout_seconds)
+        except asyncio.TimeoutError:
+            if os.name != "nt" and process.pid is not None:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    return
+                except OSError:
+                    return
+            else:
+                process.kill()
+            try:
+                await asyncio.wait_for(process.wait(), timeout=0.5)
+            except asyncio.TimeoutError:
+                return
+
+    async def terminate_all(
+        self,
+        process_registry: dict[int, asyncio.subprocess.Process],
+        registry_lock: asyncio.Lock,
+    ) -> None:
+        async with registry_lock:
+            processes = list(process_registry.values())
+        if not processes:
+            return
+        await asyncio.gather(
+            *(self.terminate_process(process) for process in processes),
+            return_exceptions=True,
+        )
 
     @staticmethod
     def default_shell() -> list[str]:
