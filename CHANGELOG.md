@@ -1,12 +1,36 @@
 # Changelog
 
-## v0.1.6 (2026-04-13)
+## v0.1.8 (2026-06-04)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.6...v0.1.8)
+
+### 🏡 Chore
+
+- **pyproject**: bump usecli to 0.1.58 and usechange to 0.1.35 ([6d89cb7](https://github.com/thememium/userun/commit/6d89cb77fa5586ab181df04070495b1958d35cdd))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
+## v0.1.7 (2026-06-04)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.6...v0.1.7)
+
+### 🏡 Chore
+
+- **pyproject**: bump usecli to 0.1.58 and usechange to 0.1.35 ([6d89cb7](https://github.com/thememium/userun/commit/6d89cb77fa5586ab181df04070495b1958d35cdd))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
+## v0.1.6 (2026-06-04)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.5...v0.1.6)
 
-### 🩹 Fixes
+### 🏡 Chore
 
-- concurrent exit teardown (#1) (#1) ([cd10a86](https://github.com/thememium/userun/commit/cd10a86d818519dae289a2cacf0721fdea330925))
+- **pyproject**: bump usecli to 0.1.58 and usechange to 0.1.35 ([6d89cb7](https://github.com/thememium/userun/commit/6d89cb77fa5586ab181df04070495b1958d35cdd))
 
 ### Contributors
 
