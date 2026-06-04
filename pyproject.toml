@@ -10,7 +10,7 @@ classifiers = [
   "Operating System :: OS Independent",
   "Intended Audience :: Developers",
 ]
-dependencies = ["asyncio>=4.0.0", "usecli>=0.1.48"]
+dependencies = ["asyncio>=4.0.0", "usecli>=0.1.58"]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
 
@@ -36,7 +36,7 @@ dev = [
   "pytest>=9.0.2",
   "ruff>=0.15.5",
   "ty>=0.0.21",
-  "usechange>=0.1.28",
+  "usechange>=0.1.35",
 ]
 
 [tool.deptry]
