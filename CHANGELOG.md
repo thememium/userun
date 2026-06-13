@@ -1,12 +1,24 @@
 # Changelog
 
+## v0.1.10 (2026-06-13)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.9...v0.1.10)
+
+### 🏡 Chore
+
+- **deps**: bump usecli to 0.1.60 and usechange to 0.1.37 ([9fed7ec](https://github.com/thememium/userun/commit/9fed7eca2d54c01b8353520af143ea778dba74c7))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.9 (2026-06-13)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.8...v0.1.9)
 
 ### 🏡 Chore
 
-- **pyproject.toml**: bump usecli and usechange to latest patch versions ([4e5d499](https://github.com/thememium/userun/commit/4e5d499776b50737e7c3d68b89643ce969a04781))
+- **deps**: bump usecli to 0.1.60 and usechange to 0.1.37 ([9fed7ec](https://github.com/thememium/userun/commit/9fed7eca2d54c01b8353520af143ea778dba74c7))
 
 ### Contributors
 
