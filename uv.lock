@@ -559,20 +559,20 @@ wheels = [
 
 [[package]]
 name = "usechange"
-version = "0.1.36"
+version = "0.1.37"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "tomli" },
     { name = "usecli" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/9d/21/eeed102dbc1326ad293950696cf96a4047bfec366bd0b326ceb9b6ee8565/usechange-0.1.36.tar.gz", hash = "sha256:301c9f600729058fd48a835d3770ba127fc77debf7e5279ca897a0a5590cb264", size = 18300, upload-time = "2026-06-13T00:38:52.832Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/60/1a/91a043bb98b570db91f07f4221fb0b18475110ba0a50c40ec243cbdb146f/usechange-0.1.37.tar.gz", hash = "sha256:ea48b2d60a9af1dd41e3083be86821a04f9173e73863eb072ece50b7919fc1ef", size = 18281, upload-time = "2026-06-13T03:40:33.135Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/62/db/e6540d28b5605b59777f9a3b79c030fb10271887e0b05815d34349a1067b/usechange-0.1.36-py3-none-any.whl", hash = "sha256:0d5e8e4d86353a941b092c3ab45020b8264d54de6506d11fde539ea19a5a0677", size = 26492, upload-time = "2026-06-13T00:38:51.854Z" },
+    { url = "https://files.pythonhosted.org/packages/f4/00/f3714528eeb833d1baa596babc705fdb456af393d71fd83e80fa9591abd4/usechange-0.1.37-py3-none-any.whl", hash = "sha256:6c6f832eeec4c04575c0b9edb0730c3f060b5a8f01396d9a537d48e512729492", size = 26492, upload-time = "2026-06-13T03:40:32.223Z" },
 ]
 
 [[package]]
 name = "usecli"
-version = "0.1.59"
+version = "0.1.60"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "case-converter" },
@@ -585,9 +585,9 @@ dependencies = [
     { name = "tomli" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/1b/71/1a5aad923843a66aca30fc8a158b7ee821f6a411df3a238d160e05670fcd/usecli-0.1.59.tar.gz", hash = "sha256:c9236da7dc78101ead20c60afa829661c538634c3d3cb441a0b2d0a9e377548f", size = 55248, upload-time = "2026-06-13T00:10:49.702Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/22/b5/c2c6479ef3a8549356f4b097f7ba70aa4265e2bd836e67341f3bd5741574/usecli-0.1.60.tar.gz", hash = "sha256:196decfe70f5728ba757fee4ac3bce879542a8bf8cd00990237387ca88c21344", size = 56603, upload-time = "2026-06-13T03:34:17.351Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/2c/bf/c6d7b47089c3c0cd630b3dc5643b733296e1ce10bdac6e0af1996333b6ed/usecli-0.1.59-py3-none-any.whl", hash = "sha256:63406f6eed5227b78977fcac4880cecb880e62a475348acdafef7b19e43f943d", size = 81060, upload-time = "2026-06-13T00:10:48.603Z" },
+    { url = "https://files.pythonhosted.org/packages/b8/e3/55d62c66d14d192335c9694af00655722bd7581089ea5d3dd03d4957dd03/usecli-0.1.60-py3-none-any.whl", hash = "sha256:7fa0d5951461a8acbfc5ba7d27bc2487a5c40e95c53c4b8591bf55df59100bd7", size = 82620, upload-time = "2026-06-13T03:34:16.114Z" },
 ]
 
 [[package]]
@@ -613,7 +613,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "asyncio", specifier = ">=4.0.0" },
-    { name = "usecli", specifier = ">=0.1.59" },
+    { name = "usecli", specifier = ">=0.1.60" },
 ]
 
 [package.metadata.requires-dev]
@@ -624,5 +624,5 @@ dev = [
     { name = "pytest", specifier = ">=9.0.2" },
     { name = "ruff", specifier = ">=0.15.5" },
     { name = "ty", specifier = ">=0.0.21" },
-    { name = "usechange", specifier = ">=0.1.36" },
+    { name = "usechange", specifier = ">=0.1.37" },
 ]
