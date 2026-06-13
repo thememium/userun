@@ -1,12 +1,24 @@
 # Changelog
 
+## v0.1.11 (2026-06-13)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.10...v0.1.11)
+
+### 🏡 Chore
+
+- **deps**: update usecli to 0.1.61 and usechange to 0.1.38 ([8e05f9e](https://github.com/thememium/userun/commit/8e05f9ef2e2c196b16ce952a04ddf75b09d6dbe8))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.10 (2026-06-13)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.9...v0.1.10)
 
 ### 🏡 Chore
 
-- **deps**: bump usecli to 0.1.60 and usechange to 0.1.37 ([9fed7ec](https://github.com/thememium/userun/commit/9fed7eca2d54c01b8353520af143ea778dba74c7))
+- **deps**: update usecli to 0.1.61 and usechange to 0.1.38 ([8e05f9e](https://github.com/thememium/userun/commit/8e05f9ef2e2c196b16ce952a04ddf75b09d6dbe8))
 
 ### Contributors
 
