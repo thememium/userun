@@ -34,6 +34,7 @@ dev = [
   "isort>=8.0.1",
   "poethepoet>=0.48.0",
   "pytest>=9.1.1",
+  "pytest-cov>=7.1.0",
   "ruff>=0.16.1",
   "ty>=0.0.65",
   "usechange>=0.1.46",
@@ -51,6 +52,7 @@ dev = "uv run userun"
 clean-full = "sh -c 'uv run isort . && uv run ruff check . --fix && uv run ruff format . && uv run deptry . && uv run ty check'"
 clean = "sh -c 'uv run isort . && uv run ruff format .'"
 test = "uv run pytest tests/ -v"
+test-cov = "uv run pytest tests/ -v --cov=userun --cov-report=term-missing"
 sort = "uv run isort ."
 lint = "uv run ruff check ."
 format = "uv run ruff format ."
