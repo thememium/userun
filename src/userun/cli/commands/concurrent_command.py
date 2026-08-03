@@ -297,7 +297,7 @@ class ConcurrentCommand(BaseCommand):
 
     def handle(
         self,
-        commands: list[str] = Argument(
+        commands: list[str] = Argument(  # noqa: B008
             ..., help="Commands to run concurrently. Quote each command."
         ),
         names: str | None = Option(
