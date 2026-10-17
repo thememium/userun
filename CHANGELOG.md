@@ -1,22 +1,24 @@
 # Changelog
 
-## v0.1.14 (2026-08-03)
+## v0.1.15 (2026-10-17)
 
-[Compare changes](https://github.com/thememium/userun/compare/v0.1.13...v0.1.14)
-
-### 💅 Refactors
-
-- **concurrent_command.py**: add noqa to suppress B008 lint warning ([282b41f](https://github.com/thememium/userun/commit/282b41fe447c77b157e5505bc428dbf69903a32f))
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.14...v0.1.15)
 
 ### 🏡 Chore
 
-- **dev**: add pytest‑cov and coverage command to pyproject.toml ([f2dc277](https://github.com/thememium/userun/commit/f2dc277dcbeb9c65dcc58f3a375efa8192969873))
-- **deps**: update pyproject.toml dependencies ([1a79563](https://github.com/thememium/userun/commit/1a79563f67f63b9339d47de8b1c70bcdd7a1cbf3))
+- **dependencies**: bump usecli to 0.1.80, usechange to 0.1.47 ([5fbb1ad](https://github.com/thememium/userun/commit/5fbb1ad956db1f7b26f344db939626b7b3de1dd1))
 
-### ✅ Tests
+### Contributors
 
-- add comprehensive tests for concurrent command behavior ([146ec3b](https://github.com/thememium/userun/commit/146ec3b903abfe3a50cfc0ef7c13ef54107e4ed3))
-- add unit test for userun main prints greeting ([056d9ac](https://github.com/thememium/userun/commit/056d9ac82567a8b08616a845afea3518a95da368))
+- Edward Boswell <thememium@gmail.com>
+
+## v0.1.14 (2026-10-17)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.13...v0.1.14)
+
+### 🏡 Chore
+
+- **dependencies**: bump usecli to 0.1.80, usechange to 0.1.47 ([5fbb1ad](https://github.com/thememium/userun/commit/5fbb1ad956db1f7b26f344db939626b7b3de1dd1))
 
 ### Contributors
 
