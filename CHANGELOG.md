@@ -1,12 +1,24 @@
 # Changelog
 
-## v0.1.15 (2026-10-17)
+## v0.1.16 (2026-11-13)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.15...v0.1.16)
+
+### 🏡 Chore
+
+- **deps**: bump dependency versions and add coverage threshold (#2) (#2) ([4dbb7ee](https://github.com/thememium/userun/commit/4dbb7eecda9e7283d9c2c50f1a7dd7213353e248))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
+## v0.1.15 (2026-11-13)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.14...v0.1.15)
 
 ### 🏡 Chore
 
-- **dependencies**: bump usecli to 0.1.80, usechange to 0.1.47 ([5fbb1ad](https://github.com/thememium/userun/commit/5fbb1ad956db1f7b26f344db939626b7b3de1dd1))
+- **deps**: bump dependency versions and add coverage threshold (#2) (#2) ([4dbb7ee](https://github.com/thememium/userun/commit/4dbb7eecda9e7283d9c2c50f1a7dd7213353e248))
 
 ### Contributors
 
