@@ -444,7 +444,7 @@ def test_terminate_process_sigkill_timeout(
 def test_terminate_process_windows_path(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
-    monkeypatch.setattr("userun.cli.commands.concurrent_command.os.name", "nt")
+    monkeypatch.setattr("userun.cli.commands.concurrent_command.IS_WINDOWS", True)
     process = stub_process()
     asyncio.run(make_command().terminate_process(process, timeout_seconds=0.05))
     assert process.returncode == -9
