@@ -13,6 +13,8 @@ from typing import TextIO
 
 from usecli import Argument, BaseCommand, Option, console, theme
 
+IS_WINDOWS = os.name == "nt"
+
 
 class ConcurrentCommand(BaseCommand):
     def signature(self) -> str:
@@ -162,7 +164,7 @@ class ConcurrentCommand(BaseCommand):
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 env=env,
-                start_new_session=os.name != "nt",
+                start_new_session=not IS_WINDOWS,
             )
         except (FileNotFoundError, PermissionError, OSError) as exc:
             await queue.put(f"{spec.prefix}failed to start: {spec.command}: {exc}\n")
@@ -386,7 +388,7 @@ class ConcurrentCommand(BaseCommand):
     ) -> None:
         if process.returncode is not None:
             return
-        if os.name != "nt" and process.pid is not None:
+        if not IS_WINDOWS and process.pid is not None:
             try:
                 os.killpg(process.pid, signal.SIGINT)
             except ProcessLookupError:
@@ -398,9 +400,9 @@ class ConcurrentCommand(BaseCommand):
         try:
             await asyncio.wait_for(process.wait(), timeout=0.5)
             return
-        except asyncio.TimeoutError:
+        except TimeoutError:
             pass
-        if os.name != "nt" and process.pid is not None:
+        if not IS_WINDOWS and process.pid is not None:
             try:
                 os.killpg(process.pid, signal.SIGTERM)
             except ProcessLookupError:
@@ -411,8 +413,8 @@ class ConcurrentCommand(BaseCommand):
             process.terminate()
         try:
             await asyncio.wait_for(process.wait(), timeout=timeout_seconds)
-        except asyncio.TimeoutError:
-            if os.name != "nt" and process.pid is not None:
+        except TimeoutError:
+            if not IS_WINDOWS and process.pid is not None:
                 try:
                     os.killpg(process.pid, signal.SIGKILL)
                 except ProcessLookupError:
@@ -423,7 +425,7 @@ class ConcurrentCommand(BaseCommand):
                 process.kill()
             try:
                 await asyncio.wait_for(process.wait(), timeout=0.5)
-            except asyncio.TimeoutError:
+            except TimeoutError:
                 return
 
     async def terminate_all(
