@@ -1,14 +1,39 @@
+# Runtime configuration for userun.
+# Paths are relative to this file.
+
 [usecli]
 command_name = "userun"
 title = "userun"
-title_file = "title.txt"
-title_font = "ansi_shadow"
 description = "A python command runner for concurrent runs."
-commands_dir = "commands"
-templates_dir = "templates"
-themes_dir = "themes"
-theme = "default"
-hide_init = true
-hide_inspire = true
-hide_make_command = true
-hide_make_theme = true
+
+[usecli.paths]
+commands = "commands"
+templates = "templates"
+# One directory or a list of directories; the first is where `make:theme`
+# writes new themes.
+themes = ["themes"]
+
+[usecli.theme]
+# Theme TOML file to load, by name or path.
+name = "default"
+
+[usecli.banner]
+# Optional: a text file whose contents replace the rendered title.
+# Relative paths resolve against the project root.
+file = "title.txt"
+# Optional: a figlet font for the title (requires the `figlet` extra).
+# font = "ansi_shadow"
+top_space = true
+bottom_space = true
+# Whether the version and description follow the title.
+show_version = false
+show_description = false
+
+[usecli.commands]
+# Built-in commands to leave unregistered, for example ["inspire"].
+hidden = ["init", "inspire", "make:command", "make:theme"]
+
+[usecli.upgrade]
+enabled = true
+# Where upgrades come from: "auto" (detect from install metadata), "pypi", or "git".
+source = "auto"
