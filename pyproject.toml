@@ -4,13 +4,13 @@ version = "0.1.16"
 description = "Run multiple shell commands concurrently with readable, prefixed output."
 readme = "README.md"
 authors = [{ name = "Edward Boswell", email = "thememium@gmail.com" }]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 classifiers = [
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
   "Intended Audience :: Developers",
 ]
-dependencies = ["asyncio>=4.0.0", "usecli>=0.1.82"]
+dependencies = ["asyncio>=4.0.0", "usecli>=0.2.6"]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
 
@@ -36,8 +36,8 @@ dev = [
   "pytest>=9.2.0",
   "pytest-cov>=7.1.0",
   "ruff>=0.17.5",
-  "ty>=0.0.102",
-  "usechange>=0.1.48",
+  "ty>=0.0.107",
+  "usechange>=0.1.50",
 ]
 
 [tool.deptry]
