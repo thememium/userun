@@ -33,7 +33,7 @@ show_description = false
 # Built-in commands to leave unregistered for this project's CLI,
 # for example ["inspire"]. The `usecli` framework binary always exposes
 # its own built-in commands.
-hidden = ["inspire"]
+hidden = ["init", "inspire", "make:command", "make:theme"]
 
 [usecli.upgrade]
 enabled = true
