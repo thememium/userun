@@ -30,10 +30,17 @@ show_version = false
 show_description = false
 
 [usecli.commands]
-# Built-in commands to leave unregistered, for example ["inspire"].
-hidden = ["init", "inspire", "make:command", "make:theme"]
+# Built-in commands to leave unregistered for this project's CLI,
+# for example ["inspire"]. The `usecli` framework binary always exposes
+# its own built-in commands.
+hidden = ["inspire"]
 
 [usecli.upgrade]
 enabled = true
 # Where upgrades come from: "auto" (detect from install metadata), "pypi", or "git".
 source = "auto"
+# Git only: repository URL. Falls back to the URL in the install metadata.
+# url = "https://github.com/owner/repo.git"
+# Optional: distribution name and Git ref (branch, tag, or commit) overrides.
+# package = "my-cli"
+# ref = "main"
