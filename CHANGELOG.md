@@ -1,24 +1,24 @@
 # Changelog
 
-## v0.1.17 (2026-11-19)
+## v0.1.18 (2026-11-20)
 
-[Compare changes](https://github.com/thememium/userun/compare/v0.1.16...v0.1.17)
-
-### 💅 Refactors
-
-- **usecli**: adjust CLI command visibility and upgrade config ([422c13d](https://github.com/thememium/userun/commit/422c13db8d043e3a1f579c3562c988dd846e0e4a))
-- **usecli**: restructure config for better modularity ([a80c9ae](https://github.com/thememium/userun/commit/a80c9ae634b7da60fbada0fe495ed926bc482c7a))
-- **concurrent_command**: replace os.name checks with IS_WINDOWS constant ([783d2b8](https://github.com/thememium/userun/commit/783d2b8b3a9f838dcfc6ea2e3fb38f8e952e5c45))
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.17...v0.1.18)
 
 ### 🏡 Chore
 
-- **cli**: hide additional built‑in commands from CLI ([bed4a9f](https://github.com/thememium/userun/commit/bed4a9f3f835f80849dba194a63da063e9b42c59))
-- **pyproject**: add setuptools package‑data patterns for *.toml and *.j2 files ([2060448](https://github.com/thememium/userun/commit/2060448b13d1cadc6cf0cfcc81e2ae074eae0893))
-- **deps**: upgrade Python requirement and pin newer package versions ([9704445](https://github.com/thememium/userun/commit/9704445125df36de69b77783e429d89cbaec0973))
+- **deps**: bump usecli and usechange to newer releases ([f1c35a1](https://github.com/thememium/userun/commit/f1c35a12c7aa37725251a2f24911cb59b26773df))
 
-### ✅ Tests
+### Contributors
 
-- **concurrent_command**: replace os.name patch with IS_WINDOWS flag ([83f92c4](https://github.com/thememium/userun/commit/83f92c4ff8ac5e680eb65025257110a4dac7fa16))
+- Edward Boswell <thememium@gmail.com>
+
+## v0.1.17 (2026-11-20)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.16...v0.1.17)
+
+### 🏡 Chore
+
+- **deps**: bump usecli and usechange to newer releases ([f1c35a1](https://github.com/thememium/userun/commit/f1c35a12c7aa37725251a2f24911cb59b26773df))
 
 ### Contributors
 
