@@ -10,7 +10,7 @@ classifiers = [
   "Operating System :: OS Independent",
   "Intended Audience :: Developers",
 ]
-dependencies = ["asyncio>=4.0.0", "usecli>=0.2.6"]
+dependencies = ["asyncio>=4.0.0", "usecli>=0.2.7"]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
 
@@ -37,7 +37,7 @@ dev = [
   "pytest-cov>=7.1.0",
   "ruff>=0.17.5",
   "ty>=0.0.107",
-  "usechange>=0.1.50",
+  "usechange>=0.1.51",
 ]
 
 [tool.deptry]
@@ -80,4 +80,3 @@ exclude = ["**/__pycache__", "**/.venv"]
 
 [tool.setuptools.package-data]
 src = ["**/*.toml", "**/*.j2"]
-
