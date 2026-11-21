@@ -480,6 +480,23 @@ def test_terminate_process_lookup_error_on_sigkill(
     asyncio.run(make_command().terminate_process(process, timeout_seconds=0.05))
 
 
+class _LiveReaderProcess:
+    """Process stub whose stdout never reaches EOF.
+
+    Avoids a real subprocess: killing it is stubbed out, so a real child and its
+    transport would outlive the event loop and be finalized later with
+    ``RuntimeError: Event loop is closed``.
+    """
+
+    def __init__(self) -> None:
+        self.stdout = asyncio.StreamReader()
+        self.stderr = None
+        self.returncode = None
+
+    async def wait(self) -> None:
+        await asyncio.Event().wait()
+
+
 def test_run_command_cancel_with_live_reader(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -488,8 +505,15 @@ def test_run_command_cancel_with_live_reader(
     async def noop(_process: object) -> None:
         return None
 
+    async def fake_exec(*args: object, **kwargs: object) -> _LiveReaderProcess:
+        return _LiveReaderProcess()
+
     monkeypatch.setattr(command, "terminate_process", noop)
-    spec = command.CommandSpec(0, python_command("import time; time.sleep(0.5)"), "[0]")
+    monkeypatch.setattr(
+        "userun.cli.commands.concurrent_command.asyncio.create_subprocess_exec",
+        fake_exec,
+    )
+    spec = command.CommandSpec(0, "ignored", "[0]")
     queue: asyncio.Queue[str | None] = asyncio.Queue()
 
     async def scenario() -> None:
