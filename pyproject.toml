@@ -48,6 +48,7 @@ DEP002 = ["asyncio"]
 DEP005 = ["asyncio"]
 
 [tool.poe.tasks]
+dev-interactive = { cmd = "uv run userun -i", use_exec = true }
 dev = "uv run userun"
 clean-full = "sh -c 'uv run isort . && uv run ruff check . --fix && uv run ruff format . && uv run deptry . && uv run ty check'"
 clean = "sh -c 'uv run isort . && uv run ruff format .'"
