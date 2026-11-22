@@ -980,14 +980,14 @@ wheels = [
 
 [[package]]
 name = "usechange"
-version = "0.1.53"
+version = "0.1.54"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "usecli" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/bf/d1/043bd27b1b706f2b46e7ba5cef16d1e999e9e272311cd20fb339c244fc3b/usechange-0.1.53.tar.gz", hash = "sha256:53c34bffa183d6482c605f7bc9ab06dc04062f498bb9f8ac7f50a4b1f7244b70", size = 20843, upload-time = "2026-11-21T23:39:41.608Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/96/46/3eeb8a02c77e81895dece3d10d424212b1189fa76f5ce851bc31c91b1f4d/usechange-0.1.54.tar.gz", hash = "sha256:7245f4f4dabf3b8cb311a0f099983d8880fc93106bb843eab83593b4aeb48334", size = 20836, upload-time = "2026-11-22T16:22:05.29Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f1/23/258ac008aca981d42317cb09a0f61f357b127f27843186e6329cb129dbc4/usechange-0.1.53-py3-none-any.whl", hash = "sha256:efa0b4eeb9fe957c3e93c549db170f65dbb587ac8999678b2e15abf254876355", size = 27167, upload-time = "2026-11-21T23:39:40.867Z" },
+    { url = "https://files.pythonhosted.org/packages/e2/37/a95f4f5a82502fef946a5daf0d2b6f176f970ee76bc6e374249d887e4e92/usechange-0.1.54-py3-none-any.whl", hash = "sha256:e4bb84f2ad4043c84281e8171764bcbe79ee65550eca7b5f3f76d07d4742a549", size = 27169, upload-time = "2026-11-22T16:22:04.592Z" },
 ]
 
 [[package]]
@@ -1046,7 +1046,7 @@ dev = [
     { name = "pytest-xdist", extras = ["psutil"], specifier = ">=3.8.0" },
     { name = "ruff", specifier = ">=0.17.5" },
     { name = "ty", specifier = ">=0.0.107" },
-    { name = "usechange", specifier = ">=0.1.53" },
+    { name = "usechange", specifier = ">=0.1.54" },
 ]
 
 [[package]]
