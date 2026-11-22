@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.1.21 (2026-11-22)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.20...v0.1.21)
+
+### 📖 Documentation
+
+- **usecli**: add skill documentation to agents, omp and opencode directories ([4d275b6](https://github.com/thememium/userun/commit/4d275b6784c1899e9396052fa43734f6b5e3bebb))
+
+### 🏡 Chore
+
+- **deps**: bump usechange to 0.1.54 ([cf14e46](https://github.com/thememium/userun/commit/cf14e46eebe38ddb3ac886c5e921a0be5c1871ce))
+- **dependencies**: bump usecli from 0.2.8 to 0.2.10 ([c4e50c9](https://github.com/thememium/userun/commit/c4e50c95bfb19c343bb9c1c02c92c3bce6ba4a7d))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.20 (2026-11-22)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.19...v0.1.20)
