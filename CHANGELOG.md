@@ -1,5 +1,26 @@
 # Changelog
 
+## v0.1.19 (2026-11-22)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.18...v0.1.19)
+
+### 🚀 Enhancements
+
+- **poe**: add dev-interactive task to run userun interactively ([2ae3cf2](https://github.com/thememium/userun/commit/2ae3cf2de4ccd23bde9843a2bbfeaf43f4c93021))
+
+### 🏡 Chore
+
+- **deps**: bump usecli from 0.2.7 to 0.2.8 ([c688e0c](https://github.com/thememium/userun/commit/c688e0c3a477f2d4050e6ebd7f8b44872c04764c))
+- **pyproject.toml**: add pytest-xdist and configure test parallelism ([2162be7](https://github.com/thememium/userun/commit/2162be7c8f3f327eb26132734e7e77ca09513bd5))
+
+### ✅ Tests
+
+- **test_concurrent_command.py**: stub live reader and mock exec for cancel ([2261cbf](https://github.com/thememium/userun/commit/2261cbf52f1c99409e76cdcee0ede0d16f2c0076))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.18 (2026-11-20)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.17...v0.1.18)
