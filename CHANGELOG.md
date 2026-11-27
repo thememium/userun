@@ -1,5 +1,22 @@
 # Changelog
 
+## v0.1.22 (2026-11-27)
+
+[Compare changes](https://github.com/thememium/userun/compare/v0.1.21...v0.1.22)
+
+### 📖 Documentation
+
+- **usecli**: move ellipsis to same line in SKILL.md ([a308d46](https://github.com/thememium/userun/commit/a308d46cecd9bd280017e63e2e727d0c199bc80b))
+
+### 🏡 Chore
+
+- **deps**: bump usechange to 0.1.55 ([69de584](https://github.com/thememium/userun/commit/69de584c13662223da97c81747a4de73589c9998))
+- **pyproject.toml**: bump usecli, ruff and ty to newer versions ([4bd9a9d](https://github.com/thememium/userun/commit/4bd9a9dc6dd4707bb4d42219963056136f0f8bd7))
+
+### Contributors
+
+- Edward Boswell <thememium@gmail.com>
+
 ## v0.1.21 (2026-11-22)
 
 [Compare changes](https://github.com/thememium/userun/compare/v0.1.20...v0.1.21)
