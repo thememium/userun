@@ -38,7 +38,7 @@ dev = [
   "pytest-xdist[psutil]>=3.8.0",
   "ruff>=0.17.6",
   "ty>=0.0.112",
-  "usechange>=0.1.54",
+  "usechange>=0.1.55",
 ]
 
 [tool.deptry]
